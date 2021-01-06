@@ -21,6 +21,10 @@ RUN cd /tmp/java && ./install-maven.sh -y
 
 RUN cd /tmp/node && ./install-node.sh -y
 
+RUN cd /tmp/wasm && ./install-wasi-sdk.sh -y
+
+RUN cd /tmp/wasm && ./install-wasmtime.sh -y
+
 # What to run on container initiallization
 
 ENTRYPOINT ["/entrypoint.sh"]
