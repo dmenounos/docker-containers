@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/denv:20"
+IMAGE="dmen/denv:21"
 CONTAINER="denv-test"
 
 # Parameters for the initialization of the container
@@ -49,15 +49,20 @@ logs)
 exec)
 	if [ "$#" -eq "1" ]; then
 		echo
-		echo "Run a command as root:"
-		echo "$0 exec bash -l"
-		echo "$0 exec bash -l -c \"node -v\""
+		echo "Run commands as root:"
 		echo "$0 exec bash -l -c \"java -version\""
+		echo "$0 exec bash -l -c \"node -v\""
+		echo
+		echo "Log as the root:"
+		echo "$0 exec bash -l"
+		echo "docker container exec -it $CONTAINER bash -l"
 		echo
 		echo "Log as the user:"
 		echo "$0 exec su -l user"
+		echo "docker container exec -it $CONTAINER su -l user"
 		echo
 		echo "Log as any user:"
+		echo "docker container exec -it -u 1000:1000 $CONTAINER bash -l"
 		echo "docker container exec -it -u \$(id -u):\$(id -g) $CONTAINER bash -l"
 		echo
 		exit 1
