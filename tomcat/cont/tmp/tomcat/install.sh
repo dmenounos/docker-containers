@@ -3,12 +3,12 @@
 set -e
 source "../install.in"
 
-ARCHURL="https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.15/bin/apache-tomcat-8.5.15.tar.gz"
+ARCHURL="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.62/bin/apache-tomcat-9.0.62.tar.gz"
 
-ARCHIVE="apache-tomcat-8.5.15.tar.gz"
-ARCHDIR="apache-tomcat-8.5.15"
+ARCHIVE="apache-tomcat-9.0.62.tar.gz"
+ARCHDIR="apache-tomcat-9.0.62"
 
-HOMEDIR="tomcat-8.5.15"
+HOMEDIR="tomcat-9.0.62"
 HOMELNK="tomcat"
 
 HOMEVAR="CATALINA_HOME"

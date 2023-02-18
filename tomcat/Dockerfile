@@ -1,4 +1,4 @@
-FROM dmen/java:08
+FROM dmen/java:11
 
 # Install program files
 
