@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/denv:18"
+IMAGE="dmen/denv:19"
 CONTAINER="denv-test"
 
 # Parameters for the initialization of the container
