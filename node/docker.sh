@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/node:12"
+IMAGE="dmen/node:14"
 CONTAINER="test-node"
 
 case $1 in
