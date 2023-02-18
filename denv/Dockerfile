@@ -19,6 +19,8 @@ RUN cd /tmp/java && ./install-ant.sh -y
 
 RUN cd /tmp/java && ./install-maven.sh -y
 
+RUN cd /tmp/node && ./install-node.sh -y
+
 # What to run on container initiallization
 
 ENTRYPOINT ["/entrypoint.sh"]
