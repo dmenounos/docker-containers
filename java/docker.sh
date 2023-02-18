@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/java:08"
+IMAGE="dmen/java:11"
 CONTAINER="test-java"
 
 case $1 in
