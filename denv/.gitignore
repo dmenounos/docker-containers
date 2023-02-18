@@ -1,0 +1,10 @@
+openjdk-*.tar.gz
+apache-ant-*.tar.gz
+apache-maven-*.tar.gz
+node-*.tar.xz
+wasi-sdk-*.tar.gz
+wasmtime-*.tar.xz
+
+code-*.tar.gz
+eclipse-*.tar.gz
+ideaIC-*.tar.gz
