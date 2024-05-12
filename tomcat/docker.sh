@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/tomcat:8.5"
+IMAGE="dmen/tomcat:9.0"
 CONTAINER="tomcat-test"
 
 case $1 in

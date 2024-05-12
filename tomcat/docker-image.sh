@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/tomcat:8.5"
+IMAGE="dmen/tomcat:9.0"
 
 case $1 in
 create)
