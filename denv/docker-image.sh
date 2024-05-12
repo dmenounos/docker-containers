@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/denv:20"
+IMAGE="dmen/denv:21"
 
 case $1 in
 create)
