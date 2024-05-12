@@ -1,0 +1,64 @@
+#!/bin/sh
+
+SERVICE_NAME="Tomcat"
+
+STRT_COMMAND="su -l tomcat -c '\$CATALINA_HOME/bin/tomcat-start.sh'"
+STOP_COMMAND="su -l tomcat -c '\$CATALINA_HOME/bin/tomcat-stop.sh'"
+
+lookup_admin_port() {
+	echo $(netstat -vatn | grep LISTEN | grep 8005 | wc -l)
+}
+
+wait_until_admin_port_exists() {
+	# keep checking while not exists
+	while [ $(lookup_admin_port) -eq "0" ]; do
+		echo -n "."
+		sleep 1
+	done
+}
+
+wait_while_admin_port_exists() {
+	# keep checking while exists
+	while [ $(lookup_admin_port) -ne "0" ]; do
+		echo -n "."
+		sleep 1
+	done
+}
+
+case "$1" in
+start)
+	if [ $(lookup_admin_port) -ne 0 ]; then
+		echo "$SERVICE_NAME already started"
+	else
+		echo "Starting $SERVICE_NAME: "
+		eval "$STRT_COMMAND"
+		wait_until_admin_port_exists
+		echo -e "\n$SERVICE_NAME started"
+	fi
+	;;
+stop)
+	if [ $(lookup_admin_port) -eq 0 ]; then
+		echo "$SERVICE_NAME already stopped"
+	else
+		echo "Stopping $SERVICE_NAME: "
+		eval "$STOP_COMMAND"
+		wait_while_admin_port_exists
+		echo -e "\n$SERVICE_NAME stopped"
+	fi
+	;;
+restart)
+	$0 stop
+	$0 start
+	;;
+status)
+	if [ $(lookup_admin_port) -eq 0 ]; then
+		echo "$SERVICE_NAME stopped"
+	else
+		echo "$SERVICE_NAME started"
+	fi
+	;;
+*)
+	echo "Usage: $0 { start | stop | restart | status }"
+	exit 1
+	;;
+esac
