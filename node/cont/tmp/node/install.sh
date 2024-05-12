@@ -3,12 +3,12 @@
 set -e
 source "../install.in"
 
-ARCHURL="https://nodejs.org/dist/v10.23.0/node-v10.23.0-linux-x64.tar.xz"
+ARCHURL="https://nodejs.org/dist/v12.20.0/node-v12.20.0-linux-x64.tar.xz"
 
-ARCHIVE="node-v10.23.0-linux-x64.tar.xz"
-ARCHDIR="node-v10.23.0-linux-x64"
+ARCHIVE="node-v12.20.0-linux-x64.tar.xz"
+ARCHDIR="node-v12.20.0-linux-x64"
 
-HOMEDIR="node-10.23.0"
+HOMEDIR="node-12.20.0"
 HOMELNK="node"
 
 HOMEVAR="NODE_HOME"

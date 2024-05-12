@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE="dmen/node:10"
+IMAGE="dmen/node:12"
 
 case $1 in
 create)
