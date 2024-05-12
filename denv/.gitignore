@@ -1,3 +1,4 @@
-jdk-*.tar.gz
+openjdk-*.tar.gz
 apache-ant-*.tar.gz
 apache-maven-*.tar.gz
+node-*.tar.xz

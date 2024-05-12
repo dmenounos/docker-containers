@@ -3,12 +3,12 @@
 set -e
 source "../install.in"
 
-ARCHURL="https://javadl.oracle.com/webapps/download/AutoDL?BundleId=239835_230deb18db3e4014bb8e3e8324f81b43"
+ARCHURL="https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz"
 
-ARCHIVE="jdk-8u221-linux-x64.tar.gz"
-ARCHDIR="jdk1.8.0_221"
+ARCHIVE="openjdk-11.0.2_linux-x64_bin.tar.gz"
+ARCHDIR="jdk-11.0.2"
 
-HOMEDIR="jdk-1.8.0_221"
+HOMEDIR="jdk-11.0.2"
 HOMELNK="jdk"
 
 HOMEVAR="JAVA_HOME"
