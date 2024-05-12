@@ -5,6 +5,7 @@ A debian based image for docker that contains the following major tools:
 * GCC, CMake, Autotools (OS packages)
 * Java, Ant, Maven
 * Node
+* WebAssembly
 
 At the root directory there are two script files that will help you with the handling of the image and the container.
 
