@@ -1,0 +1,52 @@
+
+# Install prerequisite dependencies.
+
+	sudo apt install lsb-base lsb-release
+	sudo apt install alien
+
+# Execute the program. It will install under /opt/kjvpurebiblesearch.
+
+	chmod +x kjvpurebiblesearch-3.0.0-2.x86_64.run
+	./kjvpurebiblesearch-3.0.0-2.x86_64.run
+
+# Determine the "interpreter" file.
+
+	file KingJamesPureBibleSearch
+	KingJamesPureBibleSearch: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), dynamically linked, interpreter /lib64/ld-lsb-x86-64.so.3, for GNU/Linux 2.6.24, BuildID[sha1]=24583c61449057c877b50c2b715998ddd0dc1cbf, not stripped
+
+# What is /lib64?
+
+	ls -la /lib64
+	lrwxrwxrwx 1 root root 9 Αυγ  22  2022 /lib64 -> usr/lib64
+
+# What files are there with ld perfix?
+
+	ls -la /usr/lib64/ld*
+	lrwxrwxrwx 1 root root 42 Απρ  16 15:40 /usr/lib64/ld-linux-x86-64.so.2 -> /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+
+# Create a symbolic link of the system interpreter as what is expected from the KingJamesPureBibleSearch.
+
+	sudo ln -s /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 /usr/lib64/ld-lsb-x86-64.so.3
+
+
+
+# error while loading shared libraries: libSM.so.6: cannot open shared object file: No such file or directory
+
+	apt install -y libsm6
+
+# error while loading shared libraries: libXext.so.6: cannot open shared object file: No such file or directory
+
+	apt install -y libxext6
+
+# error while loading shared libraries: libXrender.so.1: cannot open shared object file: No such file or directory
+
+	apt install -y libxrender1
+
+
+
+apt install -y x11-apps
+
+
+
+https://stackoverflow.com/questions/56931649/docker-cannot-connect-to-x-server
+https://stackoverflow.com/questions/16296753/can-you-run-gui-applications-in-a-linux-docker-container/25280523#25280523

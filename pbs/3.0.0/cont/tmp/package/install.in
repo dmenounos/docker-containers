@@ -1,0 +1,166 @@
+#!/bin/bash
+
+if [ "$0" == "$BASH_SOURCE" ]; then
+	echo "$0 is not meant to be used as a standalone script, but as a library." 1>&2
+	exit 1
+fi
+
+main() {
+	init "$@"
+
+	case "$ACTION" in
+	"download")
+		do_download
+		;;
+	"verify")
+		do_verify
+		;;
+	"install")
+		do_install
+		;;
+	*)
+		echo 1>&2
+		echo "Usage: $SCRIPT [OPTIONS]" 1>&2
+		echo "OPTIONS" 1>&2
+		echo "  -a download  Download package, signature and pk" 1>&2
+		echo "  -a verify    Verify package with signature and pk" 1>&2
+		echo "  -a install   Install package" 1>&2
+		echo "  -v Output information level" 1>&2
+		echo 1>&2
+		exit 1
+		;;
+	esac
+}
+
+init() {
+	SCRIPT=$(basename $0)
+	USER=$(whoami)
+
+	ACTION=""
+	VERBOSE="1"
+
+	while getopts ":a:v:" OPT; do
+		case $OPT in
+		"a")
+			case $OPTARG in
+			"download"|"verify"|"install")
+				ACTION="$OPTARG"
+				;;
+			*)
+				echo "Valid arguments for -$OPT: download | verify | install" 1>&2
+				exit 1
+				;;
+			esac
+			;;
+		"v")
+			case $OPTARG in
+			"0"|"1"|"2")
+				VERBOSE="$OPTARG"
+				;;
+			*)
+				echo "Valid arguments for -$OPT: 0 | 1 | 2" 1>&2
+				exit 1
+				;;
+			esac
+			;;
+		":")
+			echo "Option -$OPTARG requires an argument" 1>&2
+			exit 1
+			;;
+		"?")
+			echo "Invalid option: -$OPTARG" 1>&2
+			exit 1
+			;;
+		esac
+	done
+}
+
+trace() {
+	if [ "$VERBOSE" -ge "2" ]; then
+		echo "~~~ $1"
+	fi
+}
+
+debug() {
+	if [ "$VERBOSE" -ge "1" ]; then
+		echo "--- $1"
+	fi
+}
+
+audit() {
+	if [ "$VERBOSE" -ge "0" ]; then
+		echo "--- $1"
+	fi
+}
+
+error() {
+	if [ "$VERBOSE" -ge "0" ]; then
+		echo "!!! $1" 1>&2
+	fi
+}
+
+get_file_name() {
+	local FILE_PATH="$1";
+
+	# Equivalent to echo + sed
+	# basename "$FILE_PATH"
+
+	# Equivalent to basename
+	# Remove all characters up to and including the last slash
+	echo "$FILE_PATH" | sed -n "s|.*/||p"
+}
+
+#
+# Downloads the archive if it does not exists already.
+#
+download_archive() {
+	local ARCHURL="$1"; local ARCHIVE="$2"; local DESC="$3";
+	trace "download_archive: ARCHURL=$ARCHURL ARCHIVE=$ARCHIVE DESC=$DESC"
+
+	if [ -z "$ARCHURL" ]; then
+		debug "Skiping download_archive, ARCHURL is not set"
+		return
+	fi
+
+	if [ -z "$ARCHIVE" ] || [ -z "$DESC" ]; then
+		error "KO: Illegal Argument"
+		exit 1
+	fi
+
+	if [ ! -f "$ARCHIVE" ]; then
+		debug "Downloading $DESC"
+		curl -L -o "$ARCHIVE" "$ARCHURL"
+	fi
+}
+
+#
+# Validates the integrity of the archive, if a hash file is present.
+# Note however, the hash file is not downloaded but it has to be provided manually.
+#
+verify_archive() {
+	local ARCHIVE="$1";
+	trace "verify_archive: ARCHIVE=$ARCHIVE"
+
+	if [ -z "$ARCHIVE" ]; then
+		error "KO: Illegal Argument"
+		exit 1
+	fi
+
+	# Check hash - if exists. Resolve file manualy for now.
+	if [ -f "$ARCHIVE.md5" ]; then
+		debug "Verifying archive"
+		md5sum -c "$ARCHIVE.md5"
+	fi
+
+	# Check hash - if exists. Resolve file manualy for now.
+	if [ -f "$ARCHIVE.sha256" ]; then
+		debug "Verifying archive"
+		sha256sum -c "$ARCHIVE.sha256"
+	fi
+
+	# Check hash - if exists. Resolve file manualy for now.
+	if [ -f "$ARCHIVE.sha512" ]; then
+		debug "Verifying archive"
+		sha512sum -c "$ARCHIVE.sha512"
+	fi
+}
